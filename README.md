@@ -47,7 +47,6 @@ To run the Challenge App, follow these steps:
 1. Clone the repository to your local machine.
 2. Install Node.js if you haven't already.
 3. Open a terminal and navigate to the project's directory.
-4. Run the following command to install dependencies:
 
 ---
 
