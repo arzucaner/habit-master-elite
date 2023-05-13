@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Habit Master Elite</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div id="app">
+        <h1>Welcome to the Challenge App</h1>
+        <button @click="makeCommit">Make a Commit</button>
+
+        <form @submit="addCommit">
+            <input type="text" v-model="commitMessage" placeholder="Enter commit message">
+            <input type="date" v-model="commitDate">
+            <button type="submit">Make a Commit</button>
+        </form>
+
+        <ul>
+            <li v-for="commit in commits" :key="commit.id">
+                <div>
+                    <strong>Commit:</strong> {{ commit.message }}
+                </div>
+                <div>
+                    <strong>Date:</strong> {{ commit.date }}
+                </div>
+                <button @click="editCommit(commit.id)">Edit</button>
+                <button @click="deleteCommit(commit.id)">Delete</button>
+            </li>
+        </ul>
+
+        <div>
+            <strong>Progress:</strong> {{ progress }}%
+            <progress :value="progress" max="100"></progress>
+        </div>
+
+        <input type="number" v-model="commitGoal" placeholder="Set commit goal">
+        <button @click="updateProgress">Set Goal</button>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                message: 'Do you want to make a commit?',
+                commitMessage: '',
+                commitDate: '',
+                commits: [],
+                commitGoal: 0
+            },
+            computed: {
+                progress() {
+                    if (this.commitGoal === 0) {
+                        return 0;
+                    }
+                    return Math.round((this.commits.length / this.commitGoal) * 100);
+                }
+            },
+            methods: {
+                makeCommit() {
+                    console.log('Commit made! You did a great job today👏👏👏');
+                },
+                addCommit() {
+                    if (this.commitMessage && this.commitDate) {
+                        const newCommit = {
+                            id: Date.now(),
+                            message: this.commitMessage,
+                            date: this.commitDate
+                        };
+                        this.commits.push(newCommit);
+                        this.commitMessage = '';
+                        this.commitDate = '';
+                    }
+                },
+                editCommit(commitId) {
+                    const commitIndex = this.commits.findIndex(commit => commit.id === commitId);
+
+                    if (commitIndex !== -1) {
+                        const newCommitMessage = prompt("Enter the new commit message:");
+
+                        if (newCommitMessage) {
+                            this.commits[commitIndex].message = newCommitMessage;
+                        }
+                    }
+                },
+                deleteCommit(commitId) {
+                    const commitIndex = this.commits.findIndex(commit => commit.id === commitId);
+
+                    if (commitIndex !== -1) {
+                        this.commits.splice(commitIndex, 1);
+                    }
+                },
+                updateProgress() {
+                    if (this.commitGoal <= 0) {
+                        return;
+                    }
+
+                    const progressPercentage = Math.round((this.commits.length / this.commitGoal) * 100);
+
+                    if (progressPercentage <= 100) {
+                        this.progress = progressPercentage;
+                    } else {
+                        this.progress = 100
+                    }
+                }
+            }
+        })
+        
+                   
+
+
+
+
