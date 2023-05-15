@@ -5,12 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Habit Master Elite</title>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="challenge-app.js"></script>
-    <script src="index.js"></script>
     <link rel="stylesheet" href="index.css">
-
 </head>
 <body>
     <div id="app">
@@ -30,7 +25,7 @@
         </ul>
 
         <div>
-            <strong>Progress:</strong> %
+            <strong>Progress:</strong> {{ progress }}%
             <progress :value="progress" max="100"></progress>
         </div>
 
@@ -38,6 +33,10 @@
         <button @click="updateProgress">Set Goal</button>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="challenge-app.js"></script>
+    <script src="index.js"></script>
     <script>
         new Vue({
             el: '#app',
@@ -76,5 +75,43 @@
                     }
                 }
             }
-        })  
-                       
+        });
+    </script>
+
+    <ul id="commit-list"></ul>
+
+    <script>
+        const username = 'arzucaner';
+        const repositories = ['easy-life', 'ChirpX', 'goodness-of-nature'];
+
+        async function displayCommitCount() {
+            try {
+                const response = await getDailyCommitCount(username, repositories);
+                const commitListElement = document.getElementById('commit-list');
+
+                if (response.total === 0) {
+                    commitListElement.innerHTML = '<li>No commits today.</li>';
+                } else {
+                    const repositories = response.repositories;
+
+                    repositories.forEach(repo => {
+                        const listItem = document.createElement('li');
+                        listItem.innerText = `${repo.repository}: ${repo.count}`;
+                        commitListElement.appendChild(listItem);
+                    });
+
+                    const totalElement = document.createElement('li');
+                    totalElement.innerText
+                }
+            }
+        }
+    
+
+
+
+
+
+
+
+
+
