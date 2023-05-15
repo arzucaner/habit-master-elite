@@ -111,3 +111,7 @@ li button:hover {
         background-color: #FF0000;
     }
 }
+
+li strong {
+    font-weight: bold;
+}

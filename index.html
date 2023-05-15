@@ -6,13 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Habit Master Elite</title>
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="challenge-app.js"></script>
+    <script src="index.js"></script>
     <link rel="stylesheet" href="index.css">
+
 </head>
 <body>
     <div id="app">
         <h1>Welcome to the Challenge App</h1>
-        <button @click="makeCommit">Make a Commit</button>
-
+       
         <form @submit="addCommit">
             <input type="text" v-model="commitMessage" placeholder="Enter commit message">
             <input type="date" v-model="commitDate">
@@ -21,19 +24,13 @@
 
         <ul>
             <li v-for="commit in commits" :key="commit.id">
-                <div>
-                    <strong>Commit:</strong> {{ commit.message }}
-                </div>
-                <div>
-                    <strong>Date:</strong> {{ commit.date }}
-                </div>
                 <button @click="editCommit(commit.id)">Edit</button>
                 <button @click="deleteCommit(commit.id)">Delete</button>
             </li>
         </ul>
 
         <div>
-            <strong>Progress:</strong> {{ progress }}%
+            <strong>Progress:</strong> %
             <progress :value="progress" max="100"></progress>
         </div>
 
@@ -60,9 +57,6 @@
                 }
             },
             methods: {
-                makeCommit() {
-                    console.log('Commit made! You did a great job today👏👏👏');
-                },
                 addCommit() {
                     if (this.commitMessage && this.commitDate) {
                         const newCommit = {
@@ -79,38 +73,8 @@
                     const commitIndex = this.commits.findIndex(commit => commit.id === commitId);
 
                     if (commitIndex !== -1) {
-                        const newCommitMessage = prompt("Enter the new commit message:");
-
-                        if (newCommitMessage) {
-                            this.commits[commitIndex].message = newCommitMessage;
-                        }
-                    }
-                },
-                deleteCommit(commitId) {
-                    const commitIndex = this.commits.findIndex(commit => commit.id === commitId);
-
-                    if (commitIndex !== -1) {
-                        this.commits.splice(commitIndex, 1);
-                    }
-                },
-                updateProgress() {
-                    if (this.commitGoal <= 0) {
-                        return;
-                    }
-
-                    const progressPercentage = Math.round((this.commits.length / this.commitGoal) * 100);
-
-                    if (progressPercentage <= 100) {
-                        this.progress = progressPercentage;
-                    } else {
-                        this.progress = 100
                     }
                 }
             }
-        })
-        
-                   
-
-
-
-
+        })  
+                       
