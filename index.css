@@ -19,7 +19,7 @@ h1 {
 button {
     background-color: #FFD700;
     color: #333;
-    padding: 10px 20px;
+    padding: 8px 16px;
     border: none;
     border-radius: 50px;
     cursor: pointer;
@@ -49,6 +49,8 @@ form {
 form input {
     padding: 10px;
     margin-right: 10px;
+    max-width: 200px; 
+    box-sizing: border-box; 
 }
 
 ul {
@@ -94,6 +96,9 @@ li button:hover {
     background-color: #4CAF50;
     border-radius: 4px;
     transition: width 0.3s ease;
+    max-width: 100%; 
+    width: 0; 
+    box-sizing: border-box; 
 }
 
 .input-container {
@@ -102,7 +107,9 @@ li button:hover {
 
 .input-container input {
     padding: 10px;
-    width: 100px;
+    width: 50px;
+    max-width: 50px;
+    box-sizing: border-box;
 }
 
 .animation {
@@ -128,3 +135,27 @@ li button:hover {
 li strong {
     font-weight: bold;
 }
+  
+  label {
+    display: block;
+    margin-top: 5px;
+}
+  
+  input {
+    width: 100%;
+    padding: 5px;
+  }
+  
+  button {
+    margin-top: 10px;
+    padding: 8px 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  #output {
+    margin-top: 10px;
+  }
+  
