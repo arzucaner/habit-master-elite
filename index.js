@@ -1,6 +1,11 @@
 const axios = require('axios');
 const readline = require('readline');
 
+function showProgress(current, total) {
+  const percentage = (current / total) * 100;
+  console.log(`Progress: ${percentage.toFixed(2)}%`);
+} 
+
 async function getCommitCount(username, repositories, startDate, endDate) {
   if (!username || !repositories || !Array.isArray(repositories) || repositories.length === 0) {
     console.error('Invalid input: Username or repositories missing');
