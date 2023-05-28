@@ -159,3 +159,19 @@ li strong {
     margin-top: 10px;
   }
   
+  .user-input {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .user-input label {
+    flex: 0 0 150px;
+    margin-right: 10px;
+    text-align: right;
+  }
+  
+  .user-input input {
+    flex: 1;
+    padding: 10px;
+  }
