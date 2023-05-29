@@ -44,6 +44,11 @@ function promptUserInput() {
       const repositories = reposInput.split(',').map(repo => repo.trim());
       rl.question('Enter the start date (YYYY-MM-DD): ', (startDate) => {
         rl.question('Enter the end date (YYYY-MM-DD): ', (endDate) => {
+
+          const style = document.createElement('style');
+          style.innerHTML = 'input { width: 50%; }';
+          document.head.appendChild(style);
+          
           getCommitCount(username, repositories, startDate, endDate)
             .then(({ repositories, total }) => {
               console.log('Commit count between', startDate, 'and', endDate + ':');

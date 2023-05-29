@@ -163,15 +163,23 @@ li strong {
     display: flex;
     align-items: center;
     margin-bottom: 20px;
+    font-size: 10px;     
   }
   
   .user-input label {
     flex: 0 0 150px;
     margin-right: 10px;
     text-align: right;
-  }
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 200px; 
+    max-width: 100%;
+   }
   
   .user-input input {
     flex: 1;
     padding: 10px;
+    transform: scale(0.8);
+    font-size: 14px; 
   }
