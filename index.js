@@ -1,39 +1,4 @@
-const axios = require('axios');
-const readline = require('readline');
-
-function showProgress(current, total) {
-  const percentage = (current / total) * 100;
-  console.log(`Progress: ${percentage.toFixed(2)}%`);
-} 
-
-async function getCommitCount(username, repositories, startDate, endDate) {
-  if (!username || !repositories || !Array.isArray(repositories) || repositories.length === 0) {
-    console.error('Invalid input: Username or repositories missing');
-    return { total: 0 };
-  }
-  if (!startDate || !endDate) {
-    console.error('Invalid input: Start date or end date missing');
-    return { total: 0 };
-  }
-  try {
-    const responses = await Promise.all(repositories.map(repository => axios.get(`https://api.github.com/repos/${username}/${repository}/commits`)));
-    const commitCounts = responses.map(response => {
-      const commits = response.data;
-      const filteredCommits = commits.filter(commit => {
-        const commitDate = new Date(commit.commit.author.date).toISOString().split('T')[0];
-        return commitDate >= startDate && commitDate <= endDate;
-      });
-      return { repository: response.config.url.split('/').pop(), count: filteredCommits.length };
-    });
-    const totalCommits = commitCounts.reduce((total, commitCount) => total + commitCount.count, 0);
-    return { repositories: commitCounts, total: totalCommits };
-  } catch (error) {
-    console.error('Error:', error.message);
-    return { total: 0 };
-  }
-}
-
-function promptUserInput() {
+const promptUserInput = () => {
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
@@ -42,25 +7,35 @@ function promptUserInput() {
   rl.question('Enter your GitHub username: ', (username) => {
     rl.question('Enter the repositories (comma-separated): ', (reposInput) => {
       const repositories = reposInput.split(',').map(repo => repo.trim());
-      rl.question('Enter the start date (YYYY-MM-DD): ', (startDate) => {
-        rl.question('Enter the end date (YYYY-MM-DD): ', (endDate) => {
+      rl.question('Enter the number of date ranges: ', (rangeCount) => {
+        const dateRanges = [];
+        const askDateRange = (index) => {
+          if (index >= rangeCount) {
+            const style = document.createElement('style');
+            style.innerHTML = 'input { width: 50%; }';
+            document.head.appendChild(style);
 
-          const style = document.createElement('style');
-          style.innerHTML = 'input { width: 50%; }';
-          document.head.appendChild(style);
-          
-          getCommitCount(username, repositories, startDate, endDate)
-            .then(({ repositories, total }) => {
-              console.log('Commit count between', startDate, 'and', endDate + ':');
-              repositories.forEach(({ repository, count }) => console.log(`- ${repository}: ${count}`));
-              console.log(`Total: ${total}`);
-              rl.close();
-            })
-            .catch(error => console.error('Error:', error.message));
-        });
+            getCommitCount(username, repositories, dateRanges)
+              .then((commitCounts) => {
+                commitCounts.forEach(({ dateRange, repositories, total }) => {
+                  console.log(`Commit count between ${dateRange.startDate} and ${dateRange.endDate}:`);
+                  repositories.forEach(({ repository, count }) => console.log(`- ${repository}: ${count}`));
+                  console.log(`Total: ${total}`);
+                });
+                rl.close();
+              })
+              .catch(error => console.error('Error:', error.message));
+          } else {
+            rl.question(`Enter start date for range ${index + 1} (YYYY-MM-DD): `, (startDate) => {
+              rl.question(`Enter end date for range ${index + 1} (YYYY-MM-DD): `, (endDate) => {
+                dateRanges.push({ startDate, endDate });
+                askDateRange(index + 1);
+              });
+            });
+          }
+        };
+        askDateRange(0);
       });
     });
   });
-}
-
-promptUserInput();
+};

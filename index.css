@@ -183,3 +183,9 @@ li strong {
     transform: scale(0.8);
     font-size: 14px; 
   }
+
+  button {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
