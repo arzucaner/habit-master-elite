@@ -19,11 +19,11 @@ h1 {
 button {
     background-color: #FFD700;
     color: #333;
-    padding: 8px 16px;
+    padding: 3px 6px;
     border: none;
-    border-radius: 50px;
+    border-radius: 20px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: bold;
     text-transform: uppercase;
     transition: all 0.3s ease;
@@ -153,6 +153,10 @@ li strong {
     color: white;
     border: none;
     cursor: pointer;
+    font-size: 14px;
+    border-radius: 4px;
+    width: auto;
+    height: auto;
   }
   
   #output {
