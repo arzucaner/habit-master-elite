@@ -62,7 +62,8 @@ This project is licensed under the [MIT License](LICENSE).
 
 ---
 
-![Habit Master Elite](https://github.com/arzucaner/habit-master-elite/assets/108270415/eb13dc1a-4b39-498b-a403-bd5c5ee6d12f)
+![Habit Master Elite](https://github.com/arzucaner/habit-master-elite/assets/108270415/fc2bde0e-3c9a-4b0d-a217-4724ead6983a)
+
 
 
 
